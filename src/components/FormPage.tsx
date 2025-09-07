@@ -1,22 +1,22 @@
-import { formStepsSample1 } from '../config/sampleStepConfig';
+import type { FormStep } from '../config/stepsInterface';
 import FormContent from './FormContent'
 
 interface FormData {
     [key: string]: string | string[] | File | File[] | undefined;
     uid?: string;
 }
-const FormPage = () => {
 
-    const onSubmit = (formData: FormData) => {
-        console.log('submitted', formData);
-        alert("Data is submitted successfully!");
-        location.reload();
-    }
+interface FormPageProps {
+    formSteps: FormStep[];
+    onSubmit: (formData: FormData) => void;
+}
+
+const FormPage = ({ formSteps, onSubmit }: FormPageProps) => {
 
     return (
         <div className="multi-step-form-container">
             <div className="multi-step-form-wrapper">
-                <FormContent formSteps={formStepsSample1} submitForm={onSubmit} />
+                <FormContent formSteps={formSteps} submitForm={onSubmit} />
             </div>
         </div>
     )

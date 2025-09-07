@@ -2,6 +2,10 @@
 
 A flexible, customizable multi-step form component for React applications built with TypeScript and Framer Motion. Includes built-in styles with no external CSS dependencies required.
 
+![screenshot1]( screenshots/screen1.png)
+![screenshot2]( screenshots/screen2.png)
+
+
 ## Features
 
 - 🚀 **Multi-step form navigation** with progress indicator
@@ -19,15 +23,15 @@ A flexible, customizable multi-step form component for React applications built 
 ## Installation
 
 ```bash
-npm install @utsavpatel/multi-step-form
+npm install react-multistep-form-wizard
 ```
 
 ## Quick Start
 
 ```tsx
 import React from 'react';
-import { MultiStepForm, formSteps } from '@utsavpatel/multi-step-form';
-import '@utsavpatel/multi-step-form/dist/styles.css';
+import { MultiStepForm, type FormStep } from 'react-multistep-form-wizard';
+import 'react-multistep-form-wizard/dist/index.css';
 
 function App() {
   const handleSubmit = (formData) => {
@@ -35,14 +39,63 @@ function App() {
     // Handle form submission
   };
 
-  return (
+  const formStepsSample: FormStep[] = [
+        {
+            id: 1,
+            title: "Employment Status",
+            description: "Please provide your employment details.",
+            fields: [
+                {
+                    name: "employmentStatus",
+                    label: "Are you currently employed?",
+                    type: "select",
+                    required: true,
+                    options: ["Yes", "No"]
+                }
+            ]
+        },
+        {
+            id: 2,
+            title: "Employment Details",
+            description: "Please provide details about your employment.",
+            fields: [
+                {
+                    name: "employer",
+                    label: "Current Employer",
+                    type: "text",
+                    required: true
+                },
+                {
+                    name: "employmentType",
+                    label: "Type of Employment",
+                    type: "select",
+                    required: true,
+                    options: ["Full-time", "Part-time", "Contract"]
+                },
+                {
+                    name: "salary",
+                    label: "Annual Salary",
+                    type: "number",
+                    required: true,
+                    validation: "formData['employmentType'] && formData['employmentType']==='Full-time'"
+                }
+            ]
+        },
+        {
+            id: 3,
+            title: "Review & Submit",
+            fields: [],
+        },
+    ]
+
+    // Note: you can also use sample config provide in package - formStepsSample1, formStepsSample2
+
+  return 
     <div>
-      <MultiStepForm 
-        formSteps={formSteps} 
-        onSubmit={handleSubmit} 
-      />
-    </div>
-  );
+            <h1>Multi Step</h1>
+            <MultiStepForm formSteps={formStepsSample} onSubmit={handleSubmit}/>
+        </div>
+  ;
 }
 
 export default App;
@@ -53,14 +106,14 @@ export default App;
 ### 1. Import the component and styles
 
 ```tsx
-import { MultiStepForm } from '@utsavpatel/multi-step-form';
-import '@utsavpatel/multi-step-form/dist/styles.css';
+import { formStepsSample1, formStepsSample2, MultiStepForm, type FormStep } from 'react-multistep-form-wizard';
+import 'react-multistep-form-wizard/dist/index.css';
 ```
 
 ### 2. Define your form steps
 
 ```tsx
-import { FormStep } from '@utsavpatel/multi-step-form';
+import { FormStep } from 'react-multistep-form-wizard';
 
 const myFormSteps: FormStep[] = [
   {
@@ -272,7 +325,7 @@ type FormFieldType =
 The package includes sample configurations you can use as starting points:
 
 ```tsx
-import { formSteps, formSteps1, formSteps2 } from '@utsavpatel/multi-step-form';
+import { formSteps, formSteps1, formSteps2 } from 'react-multistep-form-wizard';
 
 // Use predefined configurations
 <MultiStepForm formSteps={formSteps} onSubmit={handleSubmit} />
@@ -320,9 +373,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you have any questions or need help, please:
 
-1. Check the [documentation](https://github.com/utsavpatel/multi-step-form#readme)
-2. Search [existing issues](https://github.com/utsavpatel/multi-step-form/issues)
-3. Create a [new issue](https://github.com/utsavpatel/multi-step-form/issues/new)
+1. Check the [documentation](https://github.com/utsav2727/react-multistep-form-wizard#readme)
+2. Search [existing issues](https://github.com/utsav2727/react-multistep-form-wizard/issues)
+3. Create a [new issue](https://github.com/utsav2727/react-multistep-form-wizard/issues/new)
 
 ## Changelog
 

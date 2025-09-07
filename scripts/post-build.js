@@ -111,18 +111,17 @@ fs.writeFileSync(path.join(configDir, 'steps.d.ts'), stepsDts);
 fs.writeFileSync(path.join(configDir, 'sampleStepConfig.d.ts'), sampleStepConfigDts);
 
 // Update main index.d.ts
-const mainIndexDts = `// Main exports for the multi-step form package
+const mainIndexDts = `// Import styles
+import './styles.css';
+
+// Main exports for the multi-step form package
 export { default as MultiStepForm } from './components/FormPage';
-export { default as DynamicFormContainer } from './components/DynamicFormContainer';
-export { default as FormContent } from './components/FormContent';
 
 // Export types and interfaces
 export type { FormField, FormStep } from './config/stepsInterface';
 export type { FormFieldType } from './config/stepsInterface';
 
-// Export sample configurations
-export { formSteps } from './config/steps';
-export { formSteps1, formSteps2 } from './config/sampleStepConfig';`;
+export { formStepsSample1, formStepsSample2 } from './config/sampleStepConfig';`
 
 fs.writeFileSync(path.join(distDir, 'index.d.ts'), mainIndexDts);
 
