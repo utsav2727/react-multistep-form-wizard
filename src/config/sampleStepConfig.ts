@@ -1,7 +1,7 @@
 import type { FormStep } from "./stepsInterface";
 
 // sample 1
-export const formSteps1: FormStep[] = [
+export const formStepsSample1: FormStep[] = [
     {
         id: 1,
         title: "Personal Information",
@@ -630,7 +630,7 @@ export const formSteps1: FormStep[] = [
 ]
 
 // sample 2
-export const formSteps2: FormStep[] = [
+export const formStepsSample2: FormStep[] = [
     {
         id: 1,
         title: "Employment Status",

@@ -51,11 +51,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/utsavpatel/multi-step-form.git"
+    "url": "https://github.com/utsav2727/react-multistep-form-wizard"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/utsavpatel/multi-step-form/issues"
+    "url": "https://github.com/utsav2727/react-multistep-form-wizard/issues"
   },
-  "homepage": "https://github.com/utsavpatel/multi-step-form#readme"
+  "homepage": "https://github.com/utsav2727/react-multistep-form-wizard#readme"
 }
