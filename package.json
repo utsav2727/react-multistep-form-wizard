@@ -1,0 +1,61 @@
+{
+  "name": "react-multistep-form-wizard",
+  "version": "1.0.2",
+  "description": "A flexible, customizable multi-step form component for React applications",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:lib": "vite build --config vite.lib.config.mjs && node scripts/post-build.js",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.12",
+    "react-phone-number-input": "^3.4.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.4"
+  },
+  "author": {
+    "name": "Utsav Patel",
+    "email": "utsavmp1@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "multi-step-form",
+    "form",
+    "typescript",
+    "tailwindcss",
+    "framer-motion"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/utsavpatel/multi-step-form.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/utsavpatel/multi-step-form/issues"
+  },
+  "homepage": "https://github.com/utsavpatel/multi-step-form#readme"
+}
