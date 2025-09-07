@@ -1,4 +1,4 @@
-import { formSteps } from '../config/steps'
+import { formStepsSample1 } from '../config/sampleStepConfig';
 import FormContent from './FormContent'
 
 interface FormData {
@@ -14,9 +14,9 @@ const FormPage = () => {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-indigo-100 to-blue-200 p-4">
-            <div className="flex w-full flex-col gap-6 rounded-xl bg-white p-6 shadow-xl md:h-[90vh] md:max-w-6xl md:flex-row">
-                <FormContent formSteps={formSteps} submitForm={onSubmit} />
+        <div className="multi-step-form-container">
+            <div className="multi-step-form-wrapper">
+                <FormContent formSteps={formStepsSample1} submitForm={onSubmit} />
             </div>
         </div>
     )

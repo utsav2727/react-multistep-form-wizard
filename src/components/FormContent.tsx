@@ -1,21 +1,6 @@
 import { useState } from "react";
 import DynamicFormContainer from "./DynamicFormContainer";
-
-interface FormField {
-    name: string;
-    label: string;
-    type: string;
-    required: boolean;
-    options?: string[];
-    validation?: string;
-}
-
-interface FormStep {
-    id: number;
-    title: string;
-    description?: string;
-    fields: FormField[];
-}
+import type { FormStep } from "../config/stepsInterface";
 
 interface FormData {
     [key: string]: string | string[] | File | File[] | undefined;
@@ -39,32 +24,29 @@ export default function FormContent({
 
     return (
         <>
-            <div className="rounded-lg bg-blue-600 p-6 text-white md:w-1/4">
-                <div className="space-y-4">
+            <div className="multi-step-form-sidebar">
+                <div className="multi-step-form-steps">
                     {formSteps.map((step, index) => (
                         <div
                             key={step.id}
-                            className={`flex items-center gap-3 rounded-md p-2 ${currentStep === index ? "bg-blue-700" : ""
-                                }`}
+                            className={`multi-step-form-step ${currentStep === index ? "active" : ""}`}
                         >
                             <span
-                                className={`flex h-8 w-8 items-center justify-center rounded-full ${currentStep === index
-                                    ? "bg-white text-blue-600"
-                                    : "border-2 border-white"
-                                    }`}
+                                className={`multi-step-form-step-number ${currentStep === index ? "active" : "inactive"}`}
                             >
                                 {index + 1}
                             </span>
-                            <span className="font-medium text-sm">{step.title}</span>
+                            <span className="multi-step-form-step-title">{step.title}</span>
                         </div>
                     ))}
                 </div>
             </div>
-            <div className="max-h-[100%] overflow-auto p-6 md:w-3/4">
+            <div className="multi-step-form-content">
                 <DynamicFormContainer
                     submitForm={submitForm}
                     onStepChange={handleStepChange}
                     currentStep={currentStep}
+                    formSteps={formSteps}
                 />
             </div>
         </>

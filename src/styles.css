@@ -1,157 +1,490 @@
 /* Multi-Step Form Styles */
-/* Note: This package requires Tailwind CSS to be installed in your project */
-/* Make sure to include Tailwind CSS in your project's CSS or install it separately */
-
 /* Custom styles for the multi-step form */
+
+/* Base styles */
+.multi-step-form-container *,
+.multi-step-form-container *::before,
+.multi-step-form-container *::after {
+    box-sizing: border-box;
+}
+
 .multi-step-form-container {
-    @apply flex min-h-screen items-center justify-center bg-gradient-to-r from-indigo-100 to-blue-200 p-4;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #e0e7ff, #bfdbfe);
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .multi-step-form-wrapper {
-    @apply flex w-full flex-col gap-6 rounded-xl bg-white p-6 shadow-xl md:h-[90vh] md:max-w-6xl md:flex-row;
+    display: flex;
+    width: 100%;
+    max-width: 72rem;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-radius: 0.75rem;
+    background-color: white;
+    padding: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .multi-step-form-wrapper {
+        width: 100%;
+        height: 90vh;
+        max-width: 72rem;
+        flex-direction: row;
+    }
 }
 
 .multi-step-form-sidebar {
-    @apply rounded-lg bg-blue-600 p-6 text-white md:w-1/4;
+    border-radius: 0.5rem;
+    background-color: #2563eb;
+    padding: 1.5rem;
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .multi-step-form-sidebar {
+        width: 25%;
+    }
 }
 
 .multi-step-form-content {
-    @apply max-h-[100%] overflow-auto p-6 md:w-3/4;
+    max-height: 100%;
+    padding: 1.5rem;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.multi-step-form-content>* {
+    box-sizing: border-box;
+}
+
+.multi-step-form-content>*+* {
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .multi-step-form-content {
+        width: 75%;
+        padding-right: 2rem;
+    }
+}
+
+/* Form field container */
+.multi-step-form-field {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
 }
 
 .multi-step-form-step {
-    @apply flex items-center gap-3 rounded-md p-2;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
 }
 
 .multi-step-form-step.active {
-    @apply bg-blue-700;
+    background-color: #1d4ed8;
 }
 
 .multi-step-form-step-number {
-    @apply flex h-8 w-8 items-center justify-center rounded-full;
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
 }
 
 .multi-step-form-step-number.active {
-    @apply bg-white text-blue-600;
+    background-color: white;
+    color: #2563eb;
 }
 
 .multi-step-form-step-number.inactive {
-    @apply border-2 border-white;
+    border: 2px solid white;
+    color: white;
 }
 
 .multi-step-form-step-title {
-    @apply font-medium text-sm;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: white;
 }
 
 .multi-step-form-field-label {
-    @apply block font-medium text-gray-700;
+    display: block;
+    font-weight: 500;
+    color: #374151;
 }
 
 .multi-step-form-field-label.required::after {
-    @apply ml-1 text-red-500;
     content: '*';
+    margin-left: 0.25rem;
+    color: #ef4444;
+}
+
+.multi-step-form-input-box {
+    margin-bottom: 1rem;
 }
 
 .multi-step-form-input {
-    @apply w-full rounded-lg border px-4 py-2 outline-none transition-all focus:ring-2 focus:ring-blue-500;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.multi-step-form-input:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
 .multi-step-form-input.error {
-    @apply border-red-500;
+    border-color: #ef4444;
 }
 
 .multi-step-form-textarea {
-    @apply h-[150px] w-[400px] rounded-lg border px-4 py-2 outline-none transition-all focus:ring-2 focus:ring-blue-500;
+    height: 150px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+.multi-step-form-textarea:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
 .multi-step-form-textarea.error {
-    @apply border-red-500;
-}
-
-.multi-step-form-button {
-    @apply rounded-lg px-6 py-2 font-medium text-white transition-all;
-}
-
-.multi-step-form-button.primary {
-    @apply bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400;
-}
-
-.multi-step-form-button.secondary {
-    @apply text-gray-600 hover:bg-gray-100;
-}
-
-.multi-step-form-button.success {
-    @apply bg-green-500 hover:bg-green-600 disabled:bg-gray-400;
+    border-color: #ef4444;
 }
 
 .multi-step-form-error {
-    @apply mt-1 block text-red-500 text-xs;
+    margin-top: 0.25rem;
+    display: block;
+    color: #ef4444;
+    font-size: 0.75rem;
 }
 
 .multi-step-form-file-upload {
-    @apply flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-gray-300 border-dashed p-4 text-gray-500 transition-all hover:border-blue-500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: 2px dashed #d1d5db;
+    padding: 1rem;
+    color: #6b7280;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.multi-step-form-file-upload:hover {
+    border-color: #3b82f6;
 }
 
 .multi-step-form-file-list {
-    @apply mt-3 space-y-2;
+    margin-top: 0.75rem;
+}
+
+.multi-step-form-file-list>*+* {
+    margin-top: 0.5rem;
 }
 
 .multi-step-form-file-item {
-    @apply flex items-center justify-between border-b p-2 last:border-0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.5rem;
 }
 
-.multi-step-form-checkbox-group {
-    @apply grid gap-2;
+.multi-step-form-file-item:last-child {
+    border-bottom: 0;
 }
 
-.multi-step-form-checkbox-group.multiselect {
-    @apply grid-cols-2;
+/* Additional Classes */
+.multi-step-form-error.warning {
+    color: #d97706;
+}
+
+fieldset {
+    border: none;
+}
+
+.multi-step-form-fieldset {
+    margin-bottom: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+}
+
+.multi-step-form-checkbox {
+    height: 1rem;
+    width: 1rem;
+    border: 1px solid #d1d5db;
+    color: #2563eb;
+}
+
+.multi-step-form-checkbox:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
 .multi-step-form-checkbox-label {
-    @apply flex cursor-pointer items-center space-x-2;
+    white-space: pre-wrap;
+    color: #1f2937;
+}
+
+.multi-step-form-show-more {
+    margin-top: 0.5rem;
+    color: #2563eb;
+    font-size: 0.875rem;
+}
+
+.multi-step-form-show-more:hover {
+    text-decoration: underline;
+}
+
+.multi-step-form-review {
+    /* overflow-x: auto; */
+}
+
+.multi-step-form-checkbox-group {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.multi-step-form-checkbox-group.multiselect {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.multi-step-form-checkbox-label {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.multi-step-form-grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.multi-step-form-grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .multi-step-form-radio-group {
-    @apply mb-6;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.multi-step-form-radio-wrapper {
+    margin-bottom: 1.5rem;
 }
 
 .multi-step-form-radio-label {
-    @apply mb-2 flex cursor-pointer items-center space-x-2;
+    margin-bottom: 0.5rem;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.multi-step-form-buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .multi-step-form-buttons-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.multi-step-form-preview-button {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s;
+}
+
+.multi-step-form-preview-button.success {
+    background-color: #22c55e;
+}
+
+.multi-step-form-preview-button.edit {
+    background-color: #2563eb;
+}
+
+.multi-step-form-preview-button.edit:hover {
+    background-color: #1d4ed8;
+}
+
+.multi-step-form-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #d1d5db;
+}
+
+.multi-step-form-preview-table thead tr {
+    background-color: #f3f4f6;
+}
+
+.multi-step-form-preview-table th,
+.multi-step-form-preview-table td {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+}
+
+.multi-step-form-preview-table th {
+    text-align: left;
+    font-weight: 500;
 }
 
 .multi-step-form-select-grid {
-    @apply grid grid-cols-1 gap-4 md:grid-cols-3;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .multi-step-form-select-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .multi-step-form-select-button {
-    @apply rounded-lg px-4 py-2 font-medium text-white transition-all;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s;
 }
 
 .multi-step-form-select-button.selected {
-    @apply bg-green-500;
+    background-color: #22c55e;
 }
 
 .multi-step-form-select-button.unselected {
-    @apply bg-blue-600 hover:bg-blue-700;
+    background-color: #2563eb;
+}
+
+.multi-step-form-select-button.unselected:hover {
+    background-color: #1d4ed8;
 }
 
 .multi-step-form-review-table {
-    @apply w-full table-auto border-collapse border border-gray-300;
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+    border: 1px solid #d1d5db;
 }
 
 .multi-step-form-review-header {
-    @apply bg-gray-100;
+    background-color: #f3f4f6;
 }
 
 .multi-step-form-review-cell {
-    @apply border border-gray-300 px-4 py-2;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
 }
 
 .multi-step-form-review-cell.header {
-    @apply text-left;
+    text-align: left;
 }
 
 .multi-step-form-review-cell.data {
-    @apply font-medium;
+    font-weight: 500;
+}
+
+/* Navigation Buttons */
+.multi-step-form-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.multi-step-form-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    min-width: 100px;
+    text-align: center;
+}
+
+.multi-step-form-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.multi-step-form-button.next {
+    background-color: #2563eb;
+    color: white;
+}
+
+.multi-step-form-button.next:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.multi-step-form-button.prev {
+    background-color: transparent;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.multi-step-form-button.prev:hover:not(:disabled) {
+    background-color: #f3f4f6;
+}
+
+.multi-step-form-button.submit {
+    background-color: #059669;
+    color: white;
+}
+
+.multi-step-form-button.submit:hover:not(:disabled) {
+    background-color: #047857;
+}
+
+.multi-step-form-flex-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.multi-step-form-file-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.multistep-navigation-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }

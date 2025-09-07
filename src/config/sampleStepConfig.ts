@@ -625,8 +625,7 @@ export const formStepsSample1: FormStep[] = [
         id: 9,
         title: "Review & Submit",
         fields: [],
-    },
-
+    }
 ]
 
 // sample 2

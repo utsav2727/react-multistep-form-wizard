@@ -31,9 +31,14 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'framer-motion': 'framer-motion',
           'react-phone-number-input': 'react-phone-number-input'
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'react-multistep-form-wizard.css') return 'index.css';
+          return assetInfo.name;
         }
       }
     },
-    outDir: 'dist'
+    outDir: 'dist',
+    cssCodeSplit: false
   }
 })

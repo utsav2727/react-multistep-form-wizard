@@ -1,13 +1,14 @@
 # Multi-Step Form React Component
 
-A flexible, customizable multi-step form component for React applications built with TypeScript, Tailwind CSS, and Framer Motion.
+A flexible, customizable multi-step form component for React applications built with TypeScript and Framer Motion. Includes built-in styles with no external CSS dependencies required.
 
 ## Features
 
 - 🚀 **Multi-step form navigation** with progress indicator
-- 🎨 **Beautiful UI** with Tailwind CSS styling
+- 🎨 **Beautiful UI** with clean, modern styling (no external CSS dependencies)
 - 📱 **Responsive design** that works on all devices
 - ⚡ **Smooth animations** powered by Framer Motion
+- 🎯 **Zero CSS dependencies** - all styles included in the package
 - 🔧 **Highly customizable** with configurable form steps
 - 📝 **Multiple field types** including text, email, phone, file uploads, selects, and more
 - ✅ **Built-in validation** with custom validation rules

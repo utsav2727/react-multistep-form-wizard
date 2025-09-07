@@ -3,8 +3,7 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { formSteps } from "../config/steps";
-import type { FormField } from "../config/stepsInterface";
+import type { FormField, FormStep } from "../config/stepsInterface";
 
 interface FormData {
     [key: string]: string | string[] | File | File[] | undefined;
@@ -15,17 +14,11 @@ interface FormErrors {
     [key: string]: string;
 }
 
-interface FormStep {
-    id: number;
-    title: string;
-    description?: string;
-    fields: FormField[];
-}
-
 interface DynamicFormContainerProps {
     submitForm: (formData: FormData) => void;
     onStepChange: (stepNumber: number) => void;
     currentStep: number;
+    formSteps: FormStep[];
 }
 
 interface UploadResult {
@@ -49,6 +42,7 @@ const DynamicFormContainer = ({
     submitForm,
     currentStep,
     onStepChange,
+    formSteps
 }: DynamicFormContainerProps) => {
     const [formData, setFormData] = useState<FormData>({});
     const [errors, setErrors] = useState<FormErrors>({});
@@ -398,8 +392,8 @@ const DynamicFormContainer = ({
     };
 
     const renderFileUploadField = (field: FormField) => (
-        <div className="mb-4">
-            <div className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-gray-300 border-dashed p-4 text-gray-500 transition-all hover:border-blue-500">
+        <div className="multi-step-form-file-container">
+            <div className="multi-step-form-file-upload">
                 <input
                     type="file"
                     id={field.name}
@@ -407,15 +401,15 @@ const DynamicFormContainer = ({
                     required={field.required}
                     onChange={(e) => handleFileChange(e, field.name)}
                     accept=".png,.jpg,.jpeg"
-                    className="hidden"
+                    className="multi-step-form-file-input"
                     multiple
                 />
                 <label
                     htmlFor={field.name}
-                    className={`flex flex-col items-center`}
+                    className="multi-step-form-file-label"
                 >
                     <svg
-                        className="mb-2 h-10 w-10 text-gray-400"
+                        className="multi-step-form-file-icon"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2"
@@ -429,10 +423,10 @@ const DynamicFormContainer = ({
                             d="M7 16V12m0 0V8m0 4h10m-5-8a4 4 0 00-4 4v1a4 4 0 004 4h5a4 4 0 004-4V7a4 4 0 00-4-4h-5z"
                         />
                     </svg>
-                    <span className="text-gray-600 text-sm">
+                    <span className="multi-step-form-file-text">
                         Drag & drop or browse to upload multiple files
                     </span>
-                    <span className="text-gray-400 text-xs">
+                    <span className="multi-step-form-file-subtext">
                         (PNG, JPG up to 5MB each)
                     </span>
                 </label>
@@ -440,18 +434,18 @@ const DynamicFormContainer = ({
 
             {/* Display uploaded files list */}
             {uploadedFiles[field.name] && uploadedFiles[field.name].length > 0 && (
-                <div className="mt-3 space-y-2">
-                    <h4 className="font-medium text-gray-700">Uploaded files:</h4>
-                    <ul className="rounded-lg bg-gray-50 p-2">
+                <div className="multi-step-form-file-list">
+                    <h4 className="multi-step-form-file-list-title">Uploaded files:</h4>
+                    <ul className="multi-step-form-file-list-container">
                         {uploadedFiles[field.name].map((file, index) => (
                             <li
                                 key={index}
-                                className="flex items-center justify-between border-b p-2 last:border-0"
+                                className="multi-step-form-file-item"
                             >
-                                <div className="flex items-center">
-                                    <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+                                <div className="multi-step-form-file-item-content">
+                                    <div className="multi-step-form-file-item-icon">
                                         <svg
-                                            className="h-4 w-4 text-blue-600"
+                                            className="multi-step-form-file-icon-small"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -466,36 +460,36 @@ const DynamicFormContainer = ({
                                             />
                                         </svg>
                                     </div>
-                                    <span className="max-w-xs truncate text-gray-800 text-sm">
+                                    <span className="multi-step-form-file-name">
                                         {file.name}
                                     </span>
-                                    <span className="ml-2 text-gray-500 text-xs">
+                                    <span className="multi-step-form-file-size">
                                         ({(file.size / 1024).toFixed(0)} KB)
                                     </span>
                                 </div>
 
-                                <div className="flex items-center">
+                                <div className="multi-step-form-file-item-status">
                                     {uploadStatus[`${field.name}_${index}`] === "uploading" && (
-                                        <span className="mr-2 text-blue-500 text-xs">
+                                        <span className="multi-step-form-status uploading">
                                             Uploading...
                                         </span>
                                     )}
                                     {uploadStatus[`${field.name}_${index}`] === "success" && (
-                                        <span className="mr-2 text-green-500 text-xs">
+                                        <span className="multi-step-form-status success">
                                             ✓ Uploaded
                                         </span>
                                     )}
                                     {uploadStatus[`${field.name}_${index}`] === "error" && (
-                                        <span className="mr-2 text-red-500 text-xs">Failed</span>
+                                        <span className="multi-step-form-status error">Failed</span>
                                     )}
 
                                     <button
                                         onClick={() => removeFile(field.name, index)}
-                                        className="text-red-500 hover:text-red-700"
+                                        className="multi-step-form-remove-button"
                                         type="button"
                                     >
                                         <svg
-                                            className="h-5 w-5"
+                                            className="multi-step-form-remove-icon"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -516,12 +510,6 @@ const DynamicFormContainer = ({
                     </ul>
                 </div>
             )}
-
-            {field.type === "file" && (
-                <p className="mt-1 text-amber-600 text-xs">
-                    You need to register with email and phone number first
-                </p>
-            )}
         </div>
     );
 
@@ -530,15 +518,15 @@ const DynamicFormContainer = ({
     const renderField = (field: FormField) => {
         if (field.type === "select") {
             return (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div className="multi-step-form-select-grid">
                     {field.options?.map((option) => (
                         <motion.button
                             key={option}
                             onClick={() => handleOptionSelect(field.name, option)}
-                            className={`rounded-lg px-4 py-2 font-medium text-white ${formData[field.name] === option
-                                ? "bg-green-500"
-                                : "bg-blue-600 hover:bg-blue-700"
-                                } transition-all`}
+                            className={`multi-step-form-select-button ${formData[field.name] === option
+                                ? "selected"
+                                : "unselected"
+                                }`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                         >
@@ -555,9 +543,9 @@ const DynamicFormContainer = ({
                     {
                         field.validation === undefined ||
                             (field.validation != null && eval(field.validation)) ? (
-                            <fieldset className="mb-6 border-t pt-4">
+                            <fieldset className="multi-step-form-fieldset">
                                 <div
-                                    className={`grid ${field.type === "multiselect" ? "grid-cols-2" : ""} gap-2`}
+                                    className={`multi-step-form-grid ${field.type === "multiselect" ? "multi-step-form-grid-cols-2" : ""}`}
                                 >
                                     {field.options
                                         ?.slice(
@@ -567,7 +555,7 @@ const DynamicFormContainer = ({
                                         .map((option) => (
                                             <label
                                                 key={option}
-                                                className="flex cursor-pointer items-center space-x-2"
+                                                className="multi-step-form-radio-group"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -579,9 +567,9 @@ const DynamicFormContainer = ({
                                                     onChange={() =>
                                                         handleOptionSelectArray(field.name, option)
                                                     }
-                                                    className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                    className="multi-step-form-checkbox"
                                                 />
-                                                <span className="whitespace-pre-wrap text-gray-800">
+                                                <span className="multi-step-form-checkbox-label">
                                                     {option}
                                                 </span>
                                             </label>
@@ -592,7 +580,7 @@ const DynamicFormContainer = ({
                                         <button
                                             type="button"
                                             onClick={() => setShowMore(!showMore)}
-                                            className="mt-2 text-blue-600 text-sm hover:underline"
+                                            className="multi-step-form-show-more"
                                         >
                                             {showMore
                                                 ? "Show Less"
@@ -608,11 +596,10 @@ const DynamicFormContainer = ({
 
         if (field.type === "singleselect") {
             return (
-                <fieldset className="mb-6">
+                <fieldset className="multi-step-form-flex-list">
                     {field.options?.map((option) => (
                         <label
                             key={option}
-                            className="mb-2 flex cursor-pointer items-center space-x-2"
                         >
                             <input
                                 type="radio"
@@ -635,7 +622,7 @@ const DynamicFormContainer = ({
                     defaultCountry="US"
                     value={(formData[field.name] as string) || ""}
                     onChange={(value) => handleInputChange2(field.name, value || "")}
-                    className="w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="multi-step-form-input"
                 />
             );
         }
@@ -650,8 +637,7 @@ const DynamicFormContainer = ({
                     value={(formData[field.name] as string) || ""}
                     onChange={(e) => handleInputChange(e, field.name)}
                     onBlur={(e) => handleInputBlur(field.name, e.target.value)}
-                    className={`h-[150px] w-[400px] rounded-lg border px-4 py-2 outline-none transition-all focus:ring-2 focus:ring-blue-500 ${errors[field.name] ? "border-red-500" : ""
-                        }`}
+                    className={`multi-step-form-textarea ${errors[field.name] ? "error" : ""}`}
                     placeholder={`Enter your ${field.label.toLowerCase()}`}
                 />
             );
@@ -663,8 +649,7 @@ const DynamicFormContainer = ({
                 value={(formData[field.name] as string) || ""}
                 onChange={(e) => handleInputChange(e, field.name)}
                 onBlur={(e) => handleInputBlur(field.name, e.target.value)}
-                className={`w-full rounded-lg border px-4 py-2 outline-none transition-all focus:ring-2 focus:ring-blue-500 ${errors[field.name] ? "border-red-500" : ""
-                    }`}
+                className={`multi-step-form-input ${errors[field.name] ? "error" : ""}`}
                 placeholder={`Enter your ${field.label.toLowerCase()}`}
             />
         );
@@ -695,14 +680,14 @@ const DynamicFormContainer = ({
 
         if (formStep.title === "Review & Submit") {
             return (
-                <div className="overflow-x-auto">
-                    <table className="w-full table-auto border-collapse border border-gray-300">
+                <div className="multi-step-form-review">
+                    <table className="multi-step-form-review-table">
                         <thead>
-                            <tr className="bg-gray-100">
-                                <th className="border border-gray-300 px-4 py-2 text-left">
+                            <tr className="multi-step-form-review-header">
+                                <th className="multi-step-form-review-cell header">
                                     Field
                                 </th>
-                                <th className="border border-gray-300 px-4 py-2 text-left">
+                                <th className="multi-step-form-review-cell header">
                                     Value
                                 </th>
                             </tr>
@@ -712,10 +697,10 @@ const DynamicFormContainer = ({
                                 .filter(([key]) => !excludedKeys.includes(key))
                                 .map(([key, value]) => (
                                     <tr key={key} className="border border-gray-300">
-                                        <td className="border border-gray-300 px-4 py-2 font-medium">
+                                        <td className="multi-step-form-review-cell">
                                             {key.replace(/_/g, " ")}
                                         </td>
-                                        <td className="border border-gray-300 px-4 py-2">
+                                        <td className="multi-step-form-review-cell">
                                             {formatValue(value)}
                                         </td>
                                     </tr>
@@ -753,7 +738,7 @@ const DynamicFormContainer = ({
                 {renderReview(formSteps[currentStep])}
 
                 {formSteps[currentStep].fields.map((field) => (
-                    <div key={field.name} className="relative">
+                    <div key={field.name} className="multi-step-form-input-box">
                         {(field.validation === undefined ||
                             (field.validation != null &&
                                 // biome-ignore lint/security/noGlobalEval: using for dynamic validation
@@ -770,7 +755,7 @@ const DynamicFormContainer = ({
                                     {renderField(field)}
 
                                     {errors[field.name] && (
-                                        <span className="mt-1 block text-red-500 text-xs">
+                                        <span className="multi-step-form-error">
                                             {errors[field.name]}
                                         </span>
                                     )}
@@ -780,11 +765,11 @@ const DynamicFormContainer = ({
                 ))}
             </div>
 
-            <div className="flex justify-between pt-6">
+            <div className="multistep-navigation-button">
                 {currentStep > 0 && (
                     <motion.button
                         onClick={handlePrev}
-                        className="rounded-lg px-6 py-2 font-medium text-gray-600 transition-all hover:bg-gray-100"
+                        className="multi-step-form-button prev"
                         whileTap={{ scale: 0.98 }}
                         disabled={isSubmitting}
                     >
@@ -795,7 +780,7 @@ const DynamicFormContainer = ({
                 {currentStep === formSteps.length - 1 ? (
                     <motion.button
                         onClick={handleSubmit}
-                        className="rounded-lg bg-green-500 px-6 py-2 font-medium text-white transition-all hover:bg-green-600 disabled:bg-gray-400"
+                        className="multi-step-form-button submit"
                         whileTap={{ scale: 0.98 }}
                         disabled={isSubmitting}
                     >
@@ -804,7 +789,7 @@ const DynamicFormContainer = ({
                 ) : (
                     <motion.button
                         onClick={handleNext}
-                        className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition-all hover:bg-blue-700 disabled:bg-gray-400"
+                        className="multi-step-form-button next"
                         whileTap={{ scale: 0.98 }}
                         disabled={isSubmitting}
                     >

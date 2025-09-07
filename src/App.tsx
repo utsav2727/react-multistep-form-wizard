@@ -3,8 +3,8 @@ import './App.css'
 import FormPage from './components/FormPage'
 
 function App() {
-  return <div className=" bg-gradient-to-r from-indigo-100 to-blue-200">
-    <div className=" m-auto max-w-screen-lg items-center justify-center">
+  return <div className="multi-step-form-app-container">
+    <div className="multi-step-form-app-content">
       <FormPage />
     </div>
   </div>
