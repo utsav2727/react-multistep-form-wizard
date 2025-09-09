@@ -41,9 +41,11 @@
   },
   "author": {
     "name": "Utsav Patel",
-    "email": "utsavmp1@gmail.com"
+    "email": "utsavmp1@gmail.com",
+    "url": "https://github.com/utsav2727"
   },
   "keywords": [
+    "react-multistep-form-wizard",
     "react",
     "multi-step-form",
     "form",
