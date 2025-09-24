@@ -106,22 +106,22 @@ const DynamicFormContainer = ({
         }
     };
 
-    const validateField = (name: string, value: string): string => {
+    const validateField = (field: FormField, value: string): string => {
         if (
             !value &&
-            formSteps[currentStep].fields.find((f) => f.name === name)?.required
+            formSteps[currentStep].fields.find((f) => f.name === field.name)?.required
         ) {
-            return `${name} is required`;
+            return `${field.name} is required`;
         }
 
         if (!value) return "";
 
-        switch (name) {
+        switch (field.type) {
             case "email":
                 return validators.email(value)
                     ? ""
                     : "Please enter a valid email address";
-            case "phone":
+            case "tel":
                 return validators.phone(value.replace(/\D/g, ""))
                     ? ""
                     : "Please enter a valid phone number";
@@ -233,11 +233,11 @@ const DynamicFormContainer = ({
         });
     };
 
-    const handleInputBlur = (fieldName: string, value: string): void => {
-        const error = validateField(fieldName, value);
+    const handleInputBlur = (field: FormField, value: string): void => {
+        const error = validateField(field, value);
         setErrors((prev) => ({
             ...prev,
-            [fieldName]: error,
+            [field.name]: error,
         }));
     };
 
@@ -285,7 +285,7 @@ const DynamicFormContainer = ({
                     newErrors[field.name] = `${field.label} is required`;
                     isValid = false;
                 } else if (typeof value === "string") {
-                    const error = validateField(field.name, value);
+                    const error = validateField(field, value);
                     if (error) {
                         newErrors[field.name] = error;
                         isValid = false;
@@ -636,7 +636,7 @@ const DynamicFormContainer = ({
                 <textarea
                     value={(formData[field.name] as string) || ""}
                     onChange={(e) => handleInputChange(e, field.name)}
-                    onBlur={(e) => handleInputBlur(field.name, e.target.value)}
+                    onBlur={(e) => handleInputBlur(field, e.target.value)}
                     className={`multi-step-form-textarea ${errors[field.name] ? "error" : ""}`}
                     placeholder={`Enter your ${field.label.toLowerCase()}`}
                 />
@@ -648,7 +648,7 @@ const DynamicFormContainer = ({
                 type={field.type}
                 value={(formData[field.name] as string) || ""}
                 onChange={(e) => handleInputChange(e, field.name)}
-                onBlur={(e) => handleInputBlur(field.name, e.target.value)}
+                onBlur={(e) => handleInputBlur(field, e.target.value)}
                 className={`multi-step-form-input ${errors[field.name] ? "error" : ""}`}
                 placeholder={`Enter your ${field.label.toLowerCase()}`}
             />
